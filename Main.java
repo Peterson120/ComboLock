@@ -5,13 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class Main
 {
     private static BufferedReader br;
+
     public static void main(String[] args) throws FileNotFoundException {
         game();
     }
@@ -39,7 +39,7 @@ public class Main
         }
         int score = (21-numGuesses) * 1500; // Calculate score of player
         log("Log.txt",score);
-        System.out.println("\nYour score was " + score + "\n\nThe average score was " + average("Log.txt") + "\n");
+        System.out.println("\nYour score was " + score + "\n\nThe average score is " + average("Log.txt") + "\n");
         System.out.println(score >= largest("Log.txt") ? "You have the highest score" : largest("Log.txt") + "\n");
         try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
         String[] highScores = Arrays.copyOf(addToSortedArray("Log.txt"),5);
@@ -55,29 +55,22 @@ public class Main
 
     static String[] addToSortedArray(String file)
     {
-        ArrayList<String> list = new ArrayList<String>();
+        int index = 0;
+        String[] list = new String[fileLength(file)];
         try
         {
             br = new BufferedReader(new FileReader(file));
-
             String nextLine;
             do
             {
                 nextLine = br.readLine();
-                if(nextLine != "null")
-                    list.add(nextLine);
-            }while(nextLine != "null");
+                if(nextLine != null)
+                    list[index++] = nextLine;
+            }while(nextLine != null);
             br.close();
         }catch(Exception e){e.printStackTrace();}
-        list.trimToSize();
-        String[] result = new String[list.size()];
-        int index = 0;
-        for(String i:list) 
-        {
-            result[index++]=i;
-        }
-        Arrays.sort(result,Collections.reverseOrder());
-        return result;
+        Arrays.sort(list,Collections.reverseOrder());
+        return list;
     }
 
     static void log(String file, Object message) // Add things to log
@@ -131,10 +124,8 @@ public class Main
         return total/fileLength(file); // Return length
     }
 
-    static String readFile(String file, int line) // Choose a name from the list
-    {
-        int length = fileLength(file);
-        
+    static String readFile(String file, int line, int length) // Choose a name from the list
+    {        
         if(line > length) // Check if line is outside file
         {
             System.out.println("Index Out of Bounds");
