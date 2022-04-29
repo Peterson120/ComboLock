@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -54,25 +55,29 @@ public class Main
 
     static String[] addToSortedArray(String file)
     {
-        String[] list = new String[fileLength(file)+1];
+        ArrayList<String> list = new ArrayList<String>();
         try
         {
             br = new BufferedReader(new FileReader(file));
 
             String nextLine;
-            int index = 0;
             do
             {
                 nextLine = br.readLine();
                 if(nextLine != "null")
-                {
-                    list[index++]=nextLine;
-                }
+                    list.add(nextLine);
             }while(nextLine != "null");
             br.close();
         }catch(Exception e){e.printStackTrace();}
-        Arrays.sort(list,Collections.reverseOrder());
-        return list;
+        list.trimToSize();
+        String[] result = new String[list.size()];
+        int index = 0;
+        for(String i:list) 
+        {
+            result[index++]=i;
+        }
+        Arrays.sort(result,Collections.reverseOrder());
+        return result;
     }
 
     static void log(String file, Object message) // Add things to log
