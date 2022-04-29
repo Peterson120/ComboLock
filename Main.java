@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +10,8 @@ import java.util.Collections;
 
 public class Main
 {
-    public static void main(String[] args) {
+    private static BufferedReader br;
+    public static void main(String[] args) throws FileNotFoundException {
         game();
     }
 
@@ -29,7 +31,7 @@ public class Main
             if(wordGame.getGuess().equals("quit"))
             {
                 System.out.println("\nYou quit the game!");
-                return;
+                Wordle.playAgain();
             }
             System.out.println(wordGame); // Print hints
             numGuesses++; // Increment number of guesses
@@ -52,10 +54,11 @@ public class Main
 
     static String[] addToSortedArray(String file)
     {
-        String[] list = new String[fileLength(file)];
+        String[] list = new String[fileLength(file)+1];
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(file));
+
             String nextLine;
             int index = 0;
             do
@@ -93,7 +96,8 @@ public class Main
         int largest = Integer.MIN_VALUE;
         try 
         {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(file));
+
             String temp;
             do{
                 temp = String.valueOf(br.readLine());
@@ -109,14 +113,14 @@ public class Main
         int total = 0; // Total var
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader(file)); // Create buffered Reader for file
-            String line = String.valueOf(reader.readLine()); // Define line to read next line
+            br = new BufferedReader(new FileReader(file));
+            String line = String.valueOf(br.readLine()); // Define line to read next line
             do
             {
                 if(line.matches("[0-9]+")) total+=Integer.valueOf(line); // Add integer value of word if file has next line
-                line = String.valueOf(reader.readLine());
+                line = String.valueOf(br.readLine());
             }while(line!="null"); // Check if file has a value
-            reader.close(); // Close reader
+            br.close();
         }
         catch(Exception e) {e.printStackTrace();} // Print error
         return total/fileLength(file); // Return length
@@ -125,6 +129,7 @@ public class Main
     static String readFile(String file, int line) // Choose a name from the list
     {
         int length = fileLength(file);
+        
         if(line > length) // Check if line is outside file
         {
             System.out.println("Index Out of Bounds");
@@ -140,9 +145,9 @@ public class Main
         int length = 0; // length var
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader(file)); // Create buffered Reader for file
-            while (reader.readLine() != null) length++; // Increment length if file has next line
-            reader.close(); // Close reader
+            br = new BufferedReader(new FileReader(file));
+            while (br.readLine() != null) length++; // Increment length if file has next line
+            br.close(); // Close reader
         }
         catch(Exception e) {System.out.println("File not found");} // File not found
         return length; // Return length
