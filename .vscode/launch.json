@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Combination Lock_a06efd68"
+        },
+        {
+            "type": "java",
+            "name": "Attach",
+            "request": "attach",
+            "hostName": "localhost",
+            "java.trace.server": "verbose",
+            "externalConsole": true,
+            "port": "<debug port of the debuggee>"
+        }
+    ]
+}
