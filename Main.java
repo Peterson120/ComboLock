@@ -31,6 +31,7 @@ public class Main
         int score = numGuesses * 1500; // Calculate score of player
         log("Log.txt",numGuesses);
         System.out.println("\nYour score was " + score + "\n\nThe average score was " + average("Log.txt"));
+        System.out.println(score >= largest("Log.txt") ? "You have the highest score" : largest("Log.txt"));
     }
 
     static void log(String file, Object message) // Add things to log
@@ -49,6 +50,22 @@ public class Main
         }  
     }
     
+    static int largest(String file)
+    {
+        int largest = Integer.MIN_VALUE;
+        try 
+        {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String temp;
+            do{
+                temp = String.valueOf(br.readLine());
+                if(temp.matches("[0-9]+") && Integer.valueOf(temp) > largest) largest = Integer.valueOf(temp);
+            }while(temp!="null");
+            br.close();
+        }catch(Exception e){e.printStackTrace();}
+        return largest;
+    }
+
     static int average(String file) // Determine file length
     {
         int total = 0; // Total var
