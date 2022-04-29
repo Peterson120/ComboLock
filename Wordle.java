@@ -6,7 +6,7 @@ class Wordle
 {
     // Instance variables
     private String guess = "";
-    private Scanner scan;
+    private static Scanner scan;
     private int length; // Num of lines in file
     private String word; // Store word
     private String[] bank;
@@ -111,4 +111,19 @@ class Wordle
     If result is negative, guess is lower than current indexed word
     if result is 0 guess is equal to current indexed word
     */
+    static void playAgain()
+    {
+        String user = scan.nextLine().toLowerCase();
+        if(user.length() <= 0);
+        else if(user.contains("yes") || user.charAt(0) == 'y')
+        {
+            Main.game();
+        }
+        else if(user.contains("no") || user.charAt(0) == 'n')
+        {
+            System.out.println("Thank you for playing");
+            scan.close();
+            System.exit(0);
+        }
+    }
 }

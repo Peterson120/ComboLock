@@ -7,7 +7,11 @@ import java.nio.file.Paths;
 
 public class Main
 {
-    public static void main(String[] args) // Wordle
+    public static void main(String[] args) {
+        game();
+    }
+
+    public static void game() // Wordle
     {
         Wordle wordGame = new Wordle();
 
