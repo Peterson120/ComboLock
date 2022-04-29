@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Main
 {
@@ -32,10 +34,42 @@ public class Main
             System.out.println(wordGame); // Print hints
             numGuesses++; // Increment number of guesses
         }
-        int score = numGuesses * 1500; // Calculate score of player
-        log("Log.txt",numGuesses);
-        System.out.println("\nYour score was " + score + "\n\nThe average score was " + average("Log.txt"));
-        System.out.println(score >= largest("Log.txt") ? "You have the highest score" : largest("Log.txt"));
+        int score = (21-numGuesses) * 1500; // Calculate score of player
+        log("Log.txt",score);
+        System.out.println("\nYour score was " + score + "\n\nThe average score was " + average("Log.txt") + "\n");
+        System.out.println(score >= largest("Log.txt") ? "You have the highest score" : largest("Log.txt") + "\n");
+        try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+        String[] highScores = Arrays.copyOf(addToSortedArray("Log.txt"),5);
+        String print = Arrays.toString(highScores)
+            .replace("[","")
+            .replace("]","")
+            .replace(", ","\n")
+            .trim();
+        System.out.println(print);
+        try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+        Wordle.playAgain();
+    }
+
+    static String[] addToSortedArray(String file)
+    {
+        String[] list = new String[fileLength(file)];
+        try
+        {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String nextLine;
+            int index = 0;
+            do
+            {
+                nextLine = br.readLine();
+                if(nextLine != "null")
+                {
+                    list[index++]=nextLine;
+                }
+            }while(nextLine != "null");
+            br.close();
+        }catch(Exception e){e.printStackTrace();}
+        Arrays.sort(list,Collections.reverseOrder());
+        return list;
     }
 
     static void log(String file, Object message) // Add things to log

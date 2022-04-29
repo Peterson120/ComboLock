@@ -113,6 +113,7 @@ class Wordle
     */
     static void playAgain()
     {
+        System.out.println("\nPlay Again?(Y/n)");
         String user = scan.nextLine().toLowerCase();
         if(user.length() <= 0);
         else if(user.contains("yes") || user.charAt(0) == 'y')
