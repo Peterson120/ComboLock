@@ -37,12 +37,12 @@ public class Main
             System.out.println(wordGame); // Print hints
             numGuesses++; // Increment number of guesses
         }
+        String[] highScores = Arrays.copyOf(addToArray("Log.txt"),5);
         int score = (21-numGuesses) * 1500; // Calculate score of player
         log("Log.txt",score);
         System.out.println("\nYour score was " + score + "\n\nThe average score is " + average("Log.txt") + "\n");
-        System.out.println(score >= largest("Log.txt") ? "You have the highest score" : largest("Log.txt") + "\n");
+        System.out.println(score >= Integer.valueOf(highScores[0]) ? "You have the highest score!" :"\n");
         try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-        String[] highScores = Arrays.copyOf(addToSortedArray("Log.txt"),5);
         String print = Arrays.toString(highScores)
             .replace("[","")
             .replace("]","")
@@ -53,7 +53,12 @@ public class Main
         Wordle.playAgain();
     }
 
-    static String[] addToSortedArray(String file)
+    /* static String[] timSort(String[] list,boolean reverseOrder)
+    {
+
+    } */
+
+    static String[] addToArray(String file)
     {
         int index = 0;
         String[] list = new String[fileLength(file)];
@@ -69,7 +74,6 @@ public class Main
             }while(nextLine != null);
             br.close();
         }catch(Exception e){e.printStackTrace();}
-        Arrays.sort(list,Collections.reverseOrder());
         return list;
     }
 
@@ -89,23 +93,6 @@ public class Main
         }  
     }
     
-    static int largest(String file)
-    {
-        int largest = Integer.MIN_VALUE;
-        try 
-        {
-            br = new BufferedReader(new FileReader(file));
-
-            String temp;
-            do{
-                temp = String.valueOf(br.readLine());
-                if(temp.matches("[0-9]+") && Integer.valueOf(temp) > largest) largest = Integer.valueOf(temp);
-            }while(temp!="null");
-            br.close();
-        }catch(Exception e){e.printStackTrace();}
-        return largest;
-    }
-
     static int average(String file) // Determine file length
     {
         int total = 0; // Total var
@@ -117,7 +104,7 @@ public class Main
             {
                 if(line.matches("[0-9]+")) total+=Integer.valueOf(line); // Add integer value of word if file has next line
                 line = String.valueOf(br.readLine());
-            }while(line!="null"); // Check if file has a value
+            }while(line!=null); // Check if file has a value
             br.close();
         }
         catch(Exception e) {e.printStackTrace();} // Print error
