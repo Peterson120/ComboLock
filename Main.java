@@ -53,11 +53,6 @@ public class Main
         Wordle.playAgain();
     }
 
-    /* static String[] timSort(String[] list,boolean reverseOrder)
-    {
-
-    } */
-
     static String[] addToArray(String file)
     {
         int index = 0;

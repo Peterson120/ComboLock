@@ -50,6 +50,7 @@ class Wordle
         guess = ""; // Set guess to an invalid guess
         do
         {
+			error = false;
             System.out.print("\nGuess a 5 letter word: \n");
             guess = scan.nextLine();
             if(guess.length() <= 0) ;
